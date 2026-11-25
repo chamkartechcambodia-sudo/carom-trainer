@@ -300,6 +300,12 @@ Cập nhật sau mỗi bước. Ghi ngày, kết quả nghiệm thu, và điều
     hình vẽ và bài 2.2, 3.1.
   - CHƯA kiểm: chưa đọc lại bằng mắt toàn bộ 23 bài trên điện thoại thật; chưa
     có người chơi phăng có kinh nghiệm đọc lại nội dung.
+- [x] Sau bàn giao (2026-11-25): bài 2.1 thêm hướng đi của bi cái theo từng độ dày (D21, phần bổ sung).
+  - `npm run check` đạt (số liệu ở báo cáo cuối lượt).
+  - Đã tự thử trên `npm run dev` ở khung 390x760: hình bốn ô không bị cắt; bấm
+    "So sánh tất cả" ở hai bàn mới, bàn còn trượt bốn đường xòe ra, bàn đã lăn
+    ba đường chụm lại.
+  - CHƯA kiểm: con số trên bàn thật.
 
 ## Việc còn mở
 

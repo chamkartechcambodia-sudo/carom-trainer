@@ -55,5 +55,5 @@ export const fig = (
   caption: string,
   balls: Setup,
   variants: Figure["variants"],
-  more: Pick<Figure, "predict" | "look" | "compare" | "tangent"> = {}
+  more: Pick<Figure, "predict" | "look" | "compare" | "tangent" | "compareCut"> = {}
 ): Block => ({ type: "figure", figure: { caption, balls, variants, ...more } })

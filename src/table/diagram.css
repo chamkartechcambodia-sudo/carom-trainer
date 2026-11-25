@@ -167,3 +167,9 @@
   font-size: 10px;
   font-weight: 700;
 }
+
+/* Net mau trong chu giai nam tren nen sang. */
+.dg-line.dg-legend {
+  stroke: var(--c-text);
+  stroke-width: 2;
+}

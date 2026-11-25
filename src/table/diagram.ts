@@ -10,6 +10,8 @@ export type Diagram =
   | { kind: "cushionLoss" }
   | { kind: "threeSpeeds" }
   | { kind: "thickness" }
+  /** Bon o, moi o mot do day: huong bi vang va huong bi cai (con truot, da lan). So do tren ban mo phong. */
+  | { kind: "cueByThickness" }
   /** Bi ma va huong hai bi sau cham. `paths`: ve them duong bi cai khi con xoay toi / xoay lui. */
   | { kind: "ghost"; tangent?: boolean; paths?: ("follow" | "draw")[] }
   | { kind: "speedSplit" }
@@ -197,6 +199,63 @@ function thickness(): Drawing {
   })
   nodes.push(text([W / 2, 126], "Hàng số dưới: bi vàng chạy lệch bao nhiêu so với hướng đánh", "dg-muted"))
   return { h: 134, alt: "Năm độ dày chạm nhìn từ phía người đánh: đầy, ba phần tư, nửa bi, một phần tư, mỏng; và góc bi mục tiêu chạy lệch tương ứng.", nodes }
+}
+
+/** Goc lech (do) so voi huong danh, do tren ban mo phong: bi vang, bi cai con truot, bi cai da lan. */
+export const THICKNESS_ANGLES: { label: string; cut: number; slide: number; roll: number }[] = [
+  { label: "3/4 bi", cut: 14.5, slide: 55, roll: 32 },
+  { label: "Nửa bi", cut: 30, slide: 49, roll: 37 },
+  { label: "1/4 bi", cut: 48.6, slide: 35, roll: 30 },
+  { label: "Mỏng", cut: 64, slide: 22, roll: 19 },
+]
+
+function cueByThickness(): Drawing {
+  const rad = (deg: number) => (deg * Math.PI) / 180
+  const r = 9
+  const nodes: SVGElement[] = []
+  THICKNESS_ANGLES.forEach((row, i) => {
+    const x = 6 + (i % 2) * 170
+    const y = 6 + Math.floor(i / 2) * 150
+    const g: Pt = [x + 62, y + 46]
+    // Bi cai di tu trai sang phai. Bi vang nam chech len tren nen chay len tren; bi cai lech xuong duoi.
+    const o: Pt = [g[0] + 2 * r * Math.cos(rad(row.cut)), g[1] - 2 * r * Math.sin(rad(row.cut))]
+    const ray = (deg: number, from: number, to: number, sign: 1 | -1): [Pt, Pt] => [
+      [g[0] + from * Math.cos(rad(deg)), g[1] + sign * from * Math.sin(rad(deg))],
+      [g[0] + to * Math.cos(rad(deg)), g[1] + sign * to * Math.sin(rad(deg))],
+    ]
+    const obj: [Pt, Pt] = [
+      [o[0] + (r + 2) * Math.cos(rad(row.cut)), o[1] - (r + 2) * Math.sin(rad(row.cut))],
+      [o[0] + 40 * Math.cos(rad(row.cut)), o[1] - 40 * Math.sin(rad(row.cut))],
+    ]
+    nodes.push(
+      felt(x, y, 158, 100),
+      line([x + 8, g[1]], [x + 150, g[1]], "dg-onfelt dg-thin dg-dot"),
+      ...arrow([x + 10, g[1]], [g[0] - r - 3, g[1]], "dg-onfelt dg-thin"),
+      ball(o, r, "yellow"),
+      ball(g, r, "ghost"),
+      ...arrow(...obj, "dg-yellowline"),
+      ...arrow(...ray(row.slide, r + 2, 50, 1), "dg-onfelt"),
+      ...arrow(...ray(row.roll, r + 2, 50, 1), "dg-onfelt dg-dash"),
+      text([x + 79, y + 116], row.label, "dg-strong"),
+      text([x + 79, y + 130], `bi cái còn trượt ${row.slide}°, đã lăn ${row.roll}°`, ""),
+      text([x + 79, y + 143], `bi vàng ${Math.round(row.cut)}°`, "dg-muted")
+    )
+  })
+  nodes.push(
+    line([12, 316], [40, 316], "dg-legend"),
+    text([46, 320], "bi cái còn trượt lúc chạm", "", "start"),
+    line([184, 316], [212, 316], "dg-legend dg-dash"),
+    text([218, 320], "bi cái đã lăn lúc chạm", "", "start"),
+    line([12, 332], [40, 332], "dg-yellowline"),
+    text([46, 336], "bi vàng", "", "start"),
+    line([184, 332], [212, 332], "dg-thin dg-dot"),
+    text([218, 336], "hướng đánh kéo dài", "", "start")
+  )
+  return {
+    h: 344,
+    alt: "Bốn ô cho bốn độ dày chạm. Chạm 3/4 bi: bi vàng lệch 15 độ, bi cái còn trượt lệch 55 độ, bi cái đã lăn lệch 32 độ. Nửa bi: 30, 49 và 37 độ. 1/4 bi: 49, 35 và 30 độ. Mỏng: 64, 22 và 19 độ. Bi cái luôn lệch về phía ngược với bi vàng.",
+    nodes,
+  }
 }
 
 function ghost(tangent: boolean, paths: ("follow" | "draw")[]): Drawing {
@@ -672,6 +731,8 @@ function draw(d: Diagram): Drawing {
       return threeSpeeds()
     case "thickness":
       return thickness()
+    case "cueByThickness":
+      return cueByThickness()
     case "ghost":
       return ghost(d.tangent ?? false, d.paths ?? [])
     case "speedSplit":

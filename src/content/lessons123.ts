@@ -174,7 +174,7 @@ export const LESSONS_2: Lesson[] = [
     id: "2.1",
     title: "Độ dày chạm",
     body: [
-      goal("gọi tên được năm độ dày chạm, biết ngắm vào đâu để có từng độ dày, và đoán được bi mục tiêu chạy về hướng nào."),
+      goal("gọi tên được năm độ dày chạm, biết ngắm vào đâu để có từng độ dày, và đoán được cả bi mục tiêu lẫn bi cái đi về hướng nào sau khi chạm."),
       h("Độ dày chạm là gì"),
       p(
         "Hãy đứng sau bi cái và nhìn theo hướng đánh. Lúc hai bi chạm nhau, bi cái che lên bi mục tiêu một phần. Phần bị che đó là độ dày chạm (người chơi gọi tắt là độ dày, hoặc đánh dày, đánh mỏng)."
@@ -211,15 +211,74 @@ export const LESSONS_2: Lesson[] = [
           compare: "b1",
         }
       ),
+      h("Còn bi cái thì đi đâu"),
+      p(
+        "Bi cái luôn lệch về phía ngược với bi vàng: bi vàng bị đẩy sang trái thì bi cái rẽ sang phải. Rẽ nhiều hay ít tùy hai thứ: độ dày chạm, và bi cái đang trượt hay đang lăn lúc chạm."
+      ),
+      dg(
+        { kind: "cueByThickness" },
+        "Bốn độ dày, bi cái đi từ trái sang. Mũi tên trắng liền: bi cái còn trượt lúc chạm. Mũi tên trắng đứt: bi cái đã lăn. Con số là góc lệch so với hướng đánh, đo trên bàn mô phỏng của app."
+      ),
+      p("Cách đoán nhanh, không cần nhớ hết con số:"),
+      steps(
+        "Chạm đầy: bi cái không rẽ. Nó dừng lại nếu còn trượt, đi theo thẳng nếu đã lăn.",
+        "Bi cái ĐÃ LĂN lúc chạm (đánh nhẹ đến vừa, hoặc bi mục tiêu không quá gần: đây là trường hợp thường gặp nhất): từ 1/4 bi tới 3/4 bi, bi cái rẽ quanh 30° tới 35°, gần như không đổi theo độ dày. Chạm thật mỏng thì chỉ rẽ khoảng 20°.",
+        "Bi cái CÒN TRƯỢT lúc chạm (bi mục tiêu rất gần và đánh đủ lực): chạm càng dày, bi cái càng bị hất ngang. 3/4 bi rẽ khoảng 55°, nửa bi khoảng 50°, 1/4 bi khoảng 35°, mỏng khoảng 22°.",
+        "Dù trượt hay lăn: chạm càng mỏng, bi cái càng đi gần hướng cũ và càng giữ được tốc độ; chạm càng dày, bi cái càng chậm."
+      ),
+      p(
+        "Vì sao trượt và lăn lại khác nhau thì bài 2.2 và cấp 3 sẽ giải thích. Lúc này chỉ cần nhớ hình trên. Một lưu ý về con số: theo lý thuyết với hai bi nảy hoàn hảo, bi cái còn trượt sẽ rẽ nhiều hơn (75°, 60°, 41°, 26°); mô phỏng của app cho số nhỏ hơn, và bàn thật thường nằm giữa hai bộ số đó."
+      ),
+      fig(
+        "Bi cái CÒN TRƯỢT: bi vàng rất gần, lực đủ, chạm giữa tâm. Bốn độ dày.",
+        { cue: [-20, 0], b1: [-15, 0] },
+        [
+          { label: "3/4 bi", shot: shot(5.74, 66) },
+          { label: "Nửa bi", shot: shot(11.54, 66) },
+          { label: "1/4 bi", shot: shot(17.46, 66) },
+          { label: "Mỏng", shot: shot(21.1, 66) },
+        ],
+        {
+          predict: "độ dày nào làm bi cái rẽ ngang nhiều nhất? Độ dày nào để nó đi gần thẳng nhất?",
+          look: "bấm \"So sánh tất cả\": bốn đường của BI CÁI xòe ra (vẽ tới lần chạm băng đầu tiên). Dày nhất rẽ nhiều nhất, mỏng nhất gần thẳng nhất.",
+          compare: "cue",
+          compareCut: true,
+        }
+      ),
+      fig(
+        "Bi cái ĐÃ LĂN: bi vàng ở xa, lực vừa, chạm trên tâm. Vẫn bốn độ dày đó.",
+        { cue: [-40, 0], b1: [-10, 0] },
+        [
+          { label: "3/4 bi", shot: shot(0.955, 58, 0.6) },
+          { label: "Nửa bi", shot: shot(1.91, 58, 0.6) },
+          { label: "1/4 bi", shot: shot(2.866, 58, 0.6) },
+          { label: "Mỏng", shot: shot(3.44, 58, 0.6) },
+        ],
+        {
+          predict: "bốn đường của bi cái lần này có xòe rộng như hình trên không?",
+          look: "bấm \"So sánh tất cả\": ba đường 3/4, nửa bi, 1/4 gần như chụm lại quanh 30° tới 37°; chỉ đường mỏng tách ra. Đây là lý do cú chạm khoảng nửa bi với bi đang lăn rất dễ tính.",
+          compare: "cue",
+          compareCut: true,
+        }
+      ),
       mistakes(
         "Ngắm thẳng vào chỗ muốn chạm trên bi mục tiêu. Phải ngắm tâm bi cái tới tâm bi ma.",
+        "Chỉ nghĩ bi mục tiêu đi đâu mà quên bi cái. Trong phăng, bi cái mới là bi phải tới bi thứ hai.",
+        "Dùng con số của bi còn trượt cho một cú đánh nhẹ, xa: lúc đó bi đã lăn và chỉ rẽ khoảng 30°.",
         "Hai bi càng xa nhau thì càng khó chạm đúng độ dày. Người mới nên tập ở cự ly gần trước.",
         "Nhiều người cắt bên trái chuẩn hơn bên phải hoặc ngược lại. Hãy tập cả hai bên."
       ),
       key(
         "Độ dày chạm là phần bi cái che lên bi mục tiêu, nhìn theo hướng đánh.",
         "Ngắm bằng bi ma: đưa tâm bi cái tới tâm bi ma.",
-        "Bi mục tiêu chạy theo đường nối hai tâm. Nửa bi thì lệch 30°."
+        "Bi mục tiêu chạy theo đường nối hai tâm. Nửa bi thì lệch 30°.",
+        "Bi cái rẽ về phía ngược với bi mục tiêu. Đã lăn: quanh 30° với mọi độ dày từ 1/4 tới 3/4. Còn trượt: càng dày càng rẽ ngang."
+      ),
+      check(
+        "Bạn đánh nhẹ vào một bi ở giữa bàn, chạm khoảng nửa bi, bi vàng chạy sang trái. Bi cái sẽ đi thế nào?",
+        ["Đi thẳng tiếp theo hướng cũ", "Rẽ sang phải khoảng 30° tới 35°", "Rẽ sang trái theo bi vàng"],
+        1,
+        "Bi cái rẽ về phía ngược với bi vàng. Đánh nhẹ thì bi đã lăn lúc chạm, nên nó rẽ quanh 30° tới 35°."
       ),
       check(
         "Muốn chạm nửa bi, bạn nhắm tâm bi cái vào đâu?",

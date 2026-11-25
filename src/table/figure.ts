@@ -27,6 +27,8 @@ export interface Figure {
   compare?: "cue" | "b1"
   /** Ve them duong 90 do cua nut dau tien (net cham) lam moc de so. */
   tangent?: boolean
+  /** Vet so sanh dung o lan cham bang dau tien cua bi do, de hinh khong roi vi cac doan bat bang. */
+  compareCut?: boolean
 }
 
 /** So kieu net phan biet duoc cua vet so sanh (khop voi .ghost-trail--1..5 trong table.css). */
@@ -97,7 +99,13 @@ export function createFigure(figure: Figure): Screen {
     tools.unshift(
       button("So sánh tất cả", "btn--primary", () => {
         shots.reset()
-        const paths = figure.variants.map((v) => simulate(figure.balls, v.shot).paths[ball] ?? null)
+        const paths = figure.variants.map((v) => {
+          const result = simulate(figure.balls, v.shot)
+          const path = result.paths[ball] ?? null
+          if (!path || !figure.compareCut) return path
+          const first = result.events.find((e) => e.type === "cushion" && e.ball === ball)
+          return first ? path.filter((_, i) => result.times[i] <= first.t) : path
+        })
         shots.table.setGhosts(withRef(paths))
         const name = ball === "cue" ? "bi cái" : "bi vàng"
         legend.textContent = `Mỗi kiểu nét là đường ${name} của một nút, xem mẫu nét trên từng nút.${tangentPath ? " Đường chấm mảnh là đường 90°." : ""}`

@@ -532,3 +532,15 @@ Chưa đối chiếu với bàn thật. Mọi con số trên là của mô hình
   - Bài 5.1 và 5.3 không có hình vẽ riêng: hình của chúng là bàn mô phỏng và
     danh sách bước.
   - Câu tự kiểm tra không được lưu vào tiến độ.
+- Bổ sung cùng ngày, theo góp ý "không đoán được hướng bi cái khi đánh 3/4, nửa
+  bi, 1/4 và mỏng": bài 2.1 trước chỉ vẽ hướng bi vàng theo độ dày, còn bi cái
+  thì dồn sang bài 2.2 và nói chung chung. Đã thêm vào 2.1 mục "Còn bi cái thì
+  đi đâu": hình bốn ô (mỗi độ dày một ô, vẽ cả bi vàng, bi cái còn trượt và bi
+  cái đã lăn), bốn bước đoán nhanh, và hai bàn bấm thử có "So sánh tất cả".
+  - Con số trong hình là số đo trên mô phỏng (thế bi ghi trong bài): còn trượt
+    55°, 49°, 35°, 22°; đã lăn 32°, 37°, 30°, 19°; cho 3/4, nửa bi, 1/4, mỏng.
+  - Lý thuyết với bi nảy hoàn hảo cho bi còn trượt: 75°, 60°, 41°, 26°. Mô
+    phỏng thấp hơn nhiều ở chạm dày (D10, mục 1). Bài nói rõ hai bộ số và rằng
+    bàn thật thường nằm giữa; chưa ai đo trên bàn thật.
+  - Vệt "So sánh tất cả" của hai bàn này dừng ở lần chạm băng đầu tiên
+    (`compareCut`) để hình không rối.
