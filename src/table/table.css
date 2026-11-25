@@ -1,0 +1,355 @@
+/* Ban SVG va mat bi cai. Mau lay tu src/app/theme.css. */
+.table {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.table--portrait {
+  width: auto;
+  max-width: 100%;
+  height: 70vh;
+  margin-inline: auto;
+}
+
+.table--interactive {
+  cursor: crosshair;
+}
+
+.table__rail {
+  fill: var(--c-rail);
+}
+
+.table__felt {
+  fill: var(--c-felt);
+}
+
+.table__diamond {
+  fill: var(--c-diamond);
+}
+
+.ball {
+  stroke: var(--c-ball-edge);
+  stroke-width: 0.08;
+}
+
+.ball--cue {
+  fill: var(--c-ball-cue);
+}
+
+.ball--yellow {
+  fill: var(--c-ball-yellow);
+}
+
+.ball--red {
+  fill: var(--c-ball-red);
+}
+
+.trail {
+  fill: none;
+  stroke-linejoin: round;
+  stroke-width: 0.22;
+  opacity: 0.85;
+}
+
+.trail--cue {
+  stroke: var(--c-ball-cue);
+  stroke-width: 0.5;
+}
+
+.trail--yellow {
+  stroke: var(--c-ball-yellow);
+}
+
+.trail--red {
+  stroke: var(--c-ball-red);
+}
+
+.aid {
+  fill: none;
+  stroke: var(--c-ball-cue);
+  stroke-linecap: round;
+}
+
+.aid--aim {
+  stroke-width: 0.16;
+  opacity: 0.75;
+}
+
+.aid--ghost {
+  stroke-width: 0.16;
+  stroke-dasharray: 0.5 0.4;
+}
+
+.aid--tangent {
+  stroke-width: 0.26;
+  stroke-dasharray: 0.01 0.8;
+}
+
+.aid--predicted {
+  stroke: var(--c-ball-cue);
+  stroke-width: 0.3;
+  stroke-dasharray: 1.2 0.6;
+  stroke-linejoin: round;
+  opacity: 0.95;
+}
+
+.aid--object {
+  stroke: var(--c-ball-yellow);
+  stroke-width: 0.16;
+  opacity: 0.75;
+}
+
+.zone {
+  fill: var(--c-ball-yellow);
+  fill-opacity: 0.18;
+  stroke: var(--c-ball-yellow);
+  stroke-width: 0.2;
+  stroke-dasharray: 0.8 0.5;
+}
+
+.tip-picker {
+  display: block;
+  width: 168px;
+  height: 168px;
+  flex: none;
+  border-radius: 50%;
+  touch-action: none;
+  cursor: pointer;
+}
+
+.tip-picker--locked {
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+.tip-picker__face {
+  fill: var(--c-ball-cue);
+  stroke: var(--c-ball-edge);
+  stroke-width: 0.02;
+}
+
+.tip-picker__guide {
+  fill: none;
+  stroke: var(--c-muted);
+  stroke-width: 0.012;
+}
+
+.tip-picker__limit {
+  fill: none;
+  stroke: var(--c-muted);
+  stroke-width: 0.015;
+  stroke-dasharray: 0.05 0.04;
+}
+
+.tip-picker__dot {
+  fill: var(--c-tip);
+}
+
+.play {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: var(--sp-4);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .play {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.ghost-trail {
+  fill: none;
+  stroke-width: 0.4;
+  stroke-linejoin: round;
+  opacity: 0.9;
+}
+
+/* Ba kieu net khac nhau ca ve mau lan dang net, de khong phu thuoc vao mau. */
+.ghost-trail--1 {
+  stroke: #ffffff;
+}
+
+.ghost-trail--2 {
+  stroke: #ffd34d;
+  stroke-dasharray: 1.4 0.8;
+}
+
+.ghost-trail--3 {
+  stroke: #ff9db0;
+  stroke-dasharray: 0.3 0.7;
+  stroke-linecap: round;
+}
+
+.mark {
+  stroke-width: 0.3;
+}
+
+.mark--guess {
+  fill: none;
+  stroke: var(--c-ball-cue);
+}
+
+.mark--target {
+  fill: var(--c-ball-yellow);
+  stroke: var(--c-ball-edge);
+}
+
+.swatch {
+  display: inline-block;
+  width: 2.2em;
+  height: 0;
+  margin-right: var(--sp-2);
+  vertical-align: middle;
+  border-top: 4px solid #1e2420;
+}
+
+.swatch--2 {
+  border-top-style: dashed;
+}
+
+.swatch--3 {
+  border-top-style: dotted;
+}
+
+.grid9 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-2);
+}
+
+.corner-zone {
+  fill: var(--c-ball-cue);
+  fill-opacity: 0.08;
+  stroke: var(--c-ball-cue);
+  stroke-width: 0.15;
+  stroke-opacity: 0.7;
+}
+
+.cue-stick {
+  stroke: #d9b77a;
+  stroke-width: 0.7;
+  stroke-linecap: butt;
+  pointer-events: none;
+}
+
+.cue-stick--tip {
+  stroke: #3d7ea6;
+}
+
+/* Dieu khien keo co. Vien bi nam ben phai; co nam ngang, dau co cham bi khi nghi. */
+.cue-pull {
+  --cue-ball: 30px;
+  position: relative;
+  height: 56px;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  background: var(--c-felt);
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+
+.cue-pull--dragging {
+  cursor: grabbing;
+}
+
+.cue-pull--disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.cue-pull__ball {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: var(--cue-ball);
+  height: var(--cue-ball);
+  margin-top: calc(var(--cue-ball) / -2);
+  border-radius: 50%;
+  background: var(--c-ball-cue);
+  border: 1px solid var(--c-ball-edge);
+}
+
+/* Cay co: than go dai ra ngoai khung ben trai, dau co mau xanh sat vien bi. */
+.cue-pull__stick {
+  position: absolute;
+  right: calc(12px + var(--cue-ball) + 3px);
+  top: 50%;
+  width: 200%;
+  height: 10px;
+  margin-top: -5px;
+  border-radius: 3px;
+  background: linear-gradient(to left, #3d7ea6 0, #3d7ea6 7px, #f4efe2 7px, #f4efe2 16px, #d9b77a 16px);
+  will-change: transform;
+}
+
+/* Vach luc: khoang ho giua dau co va vien bi. */
+.cue-pull__fill {
+  position: absolute;
+  right: calc(12px + var(--cue-ball) + 3px);
+  top: 50%;
+  height: 4px;
+  margin-top: 13px;
+  border-radius: 2px;
+  background: var(--c-ball-yellow);
+}
+
+/* Dang ra co hoac theo da: khong nhan thao tac, nhung khong lam mo nhu khi bi khoa. */
+.cue-pull--busy {
+  cursor: default;
+}
+
+/* Dau vet cua cu vua danh: huong ngam cu tren ban, diem cham cu, vach luc cu. */
+.aid--last {
+  stroke: var(--c-ball-yellow);
+  stroke-width: 0.14;
+  stroke-dasharray: 0.9 0.7;
+  opacity: 0.8;
+}
+
+.tip-picker__ghost {
+  fill: none;
+  stroke: var(--c-text);
+  stroke-width: 0.025;
+  stroke-dasharray: 0.06 0.04;
+}
+
+.cue-pull__mark {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  width: 0;
+  border-left: 2px dashed var(--c-ball-yellow);
+  pointer-events: none;
+}
+
+.last-shot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  border: 1px dashed var(--c-border);
+  border-radius: var(--radius);
+  font-size: var(--fs-sm);
+}
+
+/* Che do xep the: con tro bao la nam keo duoc, bi co vien sang de thay la dang cam duoc. */
+.table--arranging {
+  cursor: grab;
+}
+
+.table--arranging .ball {
+  stroke: var(--c-ball-yellow);
+  stroke-width: 0.12;
+  stroke-dasharray: 0.5 0.35;
+}

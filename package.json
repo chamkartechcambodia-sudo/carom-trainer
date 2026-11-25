@@ -1,0 +1,27 @@
+{
+  "name": "carom-trainer",
+  "private": true,
+  "version": "0.1.0",
+  "description": "App hoc bida phang (carom libre) - bai hoc, ban mo phong, so tap ban that",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "scenarios:check": "node scripts/check-scenarios.ts",
+    "check": "npm run typecheck && npm run test && npm run scenarios:check && npm run build"
+  },
+  "dependencies": {
+    "three": "0.187.0"
+  },
+  "devDependencies": {
+    "@types/three": "0.187.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8",
+    "vite-plugin-singlefile": "^2.3.4",
+    "vitest": "^5.1.1"
+  }
+}
