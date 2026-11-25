@@ -107,7 +107,9 @@ Tính năng:
   được con số đó.
 - Dữ liệu chỉ ở một trình duyệt. Xóa dữ liệu duyệt web là mất, trừ khi đã xuất
   file sao lưu.
-- Thư mục dự án chưa phải kho git, nên chưa có lịch sử thay đổi.
+- Mã nguồn nằm ở kho git riêng tư `chamkartechcambodia-sudo/carom-trainer` trên
+  GitHub (từ 2026-11-25). Lịch sử bắt đầu từ một commit gộp; các bước trước đó
+  chỉ có trong `docs/PROGRESS.md`.
 
 ## Giấy phép
 
