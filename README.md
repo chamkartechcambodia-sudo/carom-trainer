@@ -3,6 +3,12 @@
 Web app tiếng Việt để tự học bida phăng tự do: bài học theo 7 cấp, bàn mô phỏng
 3 bi, và sổ tập bàn thật.
 
+## Dùng ngay
+
+Mở https://chamkartechcambodia-sudo.github.io/carom-trainer/ trên máy tính hoặc
+điện thoại. Trang được build và đưa lên GitHub Pages mỗi khi nhánh `main` thay
+đổi (`.github/workflows/pages.yml`).
+
 ## Bắt đầu
 
 ```

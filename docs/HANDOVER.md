@@ -5,7 +5,10 @@ App "Học bida phăng": 7 cấp, 23 bài lý thuyết, 81 tình huống trên b
 
 ## Cách dùng
 
-- Dùng ngay: mở `dist/index.html` bằng trình duyệt. Một file duy nhất, không cần
+- Dùng ngay trên mạng: https://chamkartechcambodia-sudo.github.io/carom-trainer/
+  (GitHub Pages, tự cập nhật mỗi khi push lên `main`; workflow chỉ chạy
+  typecheck, test và build, không chạy `scenarios:check`).
+- Dùng không cần mạng: mở `dist/index.html` bằng trình duyệt. Một file duy nhất, không cần
   máy chủ, không cần mạng. Chép file này sang điện thoại cũng chạy.
 - Làm tiếp: `npm install`, `npm run dev`, và `npm run check` trước khi báo xong.
 - Dữ liệu nằm trong `localStorage` của trình duyệt đang dùng. Đổi máy hoặc đổi
@@ -105,10 +108,12 @@ Tính năng:
   dùng nút − và + để chỉnh.
 - Qua cấp chỉ dựa trên sổ tập bàn thật do người dùng tự ghi. App không kiểm
   được con số đó.
+- Dữ liệu trên trang GitHub Pages và dữ liệu khi mở file `dist/index.html` là
+  hai nơi lưu riêng; chuyển qua lại bằng xuất và nhập file sao lưu.
 - Dữ liệu chỉ ở một trình duyệt. Xóa dữ liệu duyệt web là mất, trừ khi đã xuất
   file sao lưu.
-- Mã nguồn nằm ở kho git riêng tư `chamkartechcambodia-sudo/carom-trainer` trên
-  GitHub (từ 2026-11-25). Lịch sử bắt đầu từ một commit gộp; các bước trước đó
+- Mã nguồn nằm ở kho git công khai `chamkartechcambodia-sudo/carom-trainer` trên
+  GitHub (từ 2026-11-25; công khai để dùng được GitHub Pages). Lịch sử bắt đầu từ một commit gộp; các bước trước đó
   chỉ có trong `docs/PROGRESS.md`.
 
 ## Giấy phép
