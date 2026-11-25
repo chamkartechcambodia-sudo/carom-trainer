@@ -59,6 +59,31 @@ giới hạn ghi ở đó).
 | Cách xử lý bi dạt góc hoặc dính băng | KHÔNG tìm được nguồn. Bài 7.2 và 7.3 vì vậy chỉ nêu luật (bi ra khỏi vùng được quay lại) và điều mô phỏng cho thấy về lực | (không có) |
 | Trung bình = điểm chia lượt; chuỗi dài nhất | Đúng. Không tìm được ngưỡng trung bình chính thức theo hạng | https://en.wikipedia.org/wiki/Glossary_of_cue_sports_terms ; https://conseilsport.decathlon.fr/les-regles-faciles-du-billard-francais |
 
+## Viết lại phần Hiểu (D21)
+
+Tra ngày 2026-11-25, tập trung vào CÁCH DẠY cho người mới. Không sao chép lời
+văn hay hình vẽ; hình trong app tự dựng.
+
+| Điều rút ra | Nguồn |
+|---|---|
+| Trình tự dạy: ngắm và lực, cao cơ, độ dày chạm, cú tự nhiên, đẩy theo, giữa tâm, chạm mỏng, bật băng, ê-phê, thấp cơ và kéo lùi, rồi mới tới gom bi và đặt bi. Mỗi tờ lý thuyết đi kèm một tờ bài tập | FFB, "Cahier technique du joueur débutant – Billard carambole" (2005): https://ffbillard.com/telechargements/Administratif,%20Formation,%20Arbitrage/Formation/Cahiers%20techniques%20et%20pédagogiques/cahier_technique_NT_1.pdf |
+| Hình các đĩa chồng nhau cho độ dày chạm (đầy, 3/4, nửa bi, 1/4, mỏng) | FFB tr. 25 |
+| Hình viên bi ở các thời điểm liên tiếp cho cao cơ (lăn ngay), giữa tâm (trượt rồi lăn), thấp cơ (xoáy lui mòn dần) | FFB tr. 23, 47, 77 |
+| Cú tự nhiên: khoảng nửa bi, cao cơ, dùng được từ 1/4 đến 3/4, có biên sai số | FFB tr. 27, 61 |
+| Ê-phê tác dụng ở băng, gần như không ảnh hưởng cú trực tiếp; ngắm trước rồi mới dời đầu cơ sang ngang | FFB tr. 67 đến 73 |
+| Ghi điểm đứng trước, vị trí đứng sau; khi mâu thuẫn thì ghi điểm thắng | FFB tr. 13, 82 |
+| Bi to, bi nhỏ: bi thứ ba ở góc hoặc gần băng là bi to | FFB tr. 31, 41, 97; https://en.wikipedia.org/wiki/Glossary_of_cue_sports_terms |
+| Gom bi (rappel): đưa bi thứ hai về gần bi thứ ba, trực tiếp hoặc qua 1 đến 3 băng; để bi cái tới trước để tránh hai bi đụng nhau | FFB tr. 81 đến 90 |
+| Đặt bi (placement): khi không gom được thì làm hai bi mục tiêu ít xê dịch | FFB tr. 91 đến 95 |
+| Người mới nên đánh nhẹ, không ê-phê; lỗi kinh điển là đánh mạnh; đưa cơ dài và đều, không giật | https://www.huongdanbida.com/2016/01/hoc-danh-bida-phang-co-ban-ky-thuat-cule-bi.html ; https://www.huongdanbida.com/2019/08/tim-hieu-luc-danh-cach-su-dung-luc-va-dieu-bi-bida.html |
+| Từ người chơi Việt dùng: cu-lê, rê-trô (trô, kéo), ép phê hoặc áp phê thuận và nghịch, cao cơ và thấp cơ, độ dày, gom bi, bi chủ, đá (hai bi đụng nhau) | https://vncarom.com/ep-phe-trong-bida-kien-thuc-can-ban-can-nam-vung ; https://bidatronghieu.com/thuat-ngu-bida/ ; https://www.huongdanbida.com/2016/11/bida-phang-huong-dan-cach-danh-1-bang.html |
+| Nuôi bi dọc băng: nhích hai bi dọc băng, mỗi cú trả về gần thế cũ | https://en.wikipedia.org/wiki/Straight_rail ; https://www.larousse.fr/encyclopedie/divers/billard/26952 |
+
+Không xác nhận được, nên bài KHÔNG viết: bi cái đi quãng ngắn trong cú gom là
+quy tắc chung; mức lực "vừa" cho cú tự nhiên (nguồn chỉ nói đánh nhẹ, tùy thế);
+cách gọi chín điểm chạm theo mặt đồng hồ trong tài liệu carom. Nguồn không
+thống nhất: góc lệch của cú tự nhiên (FFB vẽ khoảng 45°, Dr. Dave đo 30 đến 34°).
+
 ## Chưa tìm được
 
 - Không tìm thấy trang nào dạy bài tập nhập môn riêng cho phăng tự do (không có

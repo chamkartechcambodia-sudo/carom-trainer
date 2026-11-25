@@ -569,3 +569,36 @@
     gap: var(--sp-3);
   }
 }
+
+/* Vet so sanh thu 4, 5 va duong moc 90 do (thu 6) cua hinh trong bai hoc. */
+.ghost-trail--4 {
+  stroke: #9be7ff;
+  stroke-dasharray: 2.2 0.6 0.4 0.6;
+}
+
+.ghost-trail--5 {
+  stroke: #d6ff8f;
+  stroke-dasharray: 0.9 0.5;
+}
+
+.ghost-trail--6 {
+  stroke: #ffffff;
+  stroke-width: 0.22;
+  stroke-dasharray: 0.01 0.8;
+  stroke-linecap: round;
+  opacity: 0.95;
+}
+
+/* Mau net nho tren nut va trong chu giai. */
+.trail-key {
+  display: inline-block;
+  width: 2.4em;
+  height: 0.8em;
+  vertical-align: middle;
+}
+
+/* Ban trong bai hoc (dien thoai doc): thap vua du de hang nut ben duoi nam cung man hinh. */
+.figure .table--portrait {
+  height: min(56dvh, calc(100dvh - 300px));
+  min-height: 260px;
+}

@@ -287,6 +287,19 @@ Cập nhật sau mỗi bước. Ghi ngày, kết quả nghiệm thu, và điều
     màn hình khi chưa cuộn; kéo cơ bằng chuột rồi buông thì bi chạy và bàn vẫn
     thấy; đổi sang 1280x800 thì điều khiển về chỗ cũ, đổi lại thì vào khung.
   - CHƯA kiểm: trên điện thoại thật; điện thoại xoay ngang.
+- [x] Sau bàn giao (2026-11-25): viết lại toàn bộ 23 bài Hiểu theo góp ý "hời hợt, khó hình dung" (D21).
+  - Thêm 20 loại hình vẽ giải thích, khối mục tiêu, từng bước, lỗi hay gặp, ghi
+    nhớ, tự kiểm tra; bàn mô phỏng trong bài có "Đoán trước", "Nhìn gì" và nút
+    "So sánh tất cả".
+  - Tra cứu thêm cách dạy carom cho người mới (xem `docs/SOURCES.md`).
+  - `npm run check` đạt (số liệu ở báo cáo cuối lượt).
+  - Đã đo lại bằng mô phỏng các câu có con số hoặc có chiều; sửa hai câu không khớp.
+  - Đã tự thử trên `npm run dev`: mở đủ 23 bài ở khung 390x760, không lỗi, không
+    tràn ngang, không hình vẽ nào bị cắt chữ; bấm "So sánh tất cả" ở mọi bài có
+    nút đó; bấm câu tự kiểm tra (sai rồi đúng) ở bài 3.1; xem bằng mắt 20 loại
+    hình vẽ và bài 2.2, 3.1.
+  - CHƯA kiểm: chưa đọc lại bằng mắt toàn bộ 23 bài trên điện thoại thật; chưa
+    có người chơi phăng có kinh nghiệm đọc lại nội dung.
 
 ## Việc còn mở
 

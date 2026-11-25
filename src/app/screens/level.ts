@@ -1,12 +1,11 @@
 // Man hinh cap (bon muc Hieu, Thu, Tap, Qua cap), bai Hieu, va trang Thu cua cap.
 import type { Level } from "../../content/levels"
 import { createScenarioRunner } from "../../scenarios/scenarioScreen"
-import { createFigure } from "../../table/figure"
-import { createTipExplorer } from "../../table/tipExplorer"
 import { save, type App } from "../app"
 import { el, link, type Screen } from "../dom"
 import { drillBest, drillPassed, drillThreshold, levelComplete, levelProgress, levelUnlocked } from "../progress"
 import { href } from "../router"
+import { renderLesson } from "./lesson"
 
 const still = (page: HTMLElement): Screen => ({ el: page, destroy() {} })
 
@@ -110,27 +109,26 @@ export function createLesson(app: App, id: number, lessonId: string): Screen {
   const back = link(`← Cấp ${level.id}`, href.level(level.id), "back")
   const lesson = level.lessons.find((l) => l.id === lessonId)
   if (!lesson) return message("Không có bài này", "Hãy quay lại và chọn một bài trong danh sách.", back)
-  const figures: Screen[] = []
-  const blocks = lesson.body.map((block) => {
-    if (block.type === "text") return el("p", "", block.text)
-    if (block.type === "example") return el("p", "note", el("strong", "", "Ví dụ đời thường. "), block.text)
-    const figure = block.type === "explorer" ? createTipExplorer(block.explorer) : createFigure(block.figure)
-    figures.push(figure)
-    return figure.el
-  })
+  const content = renderLesson(lesson.body)
   const index = level.lessons.indexOf(lesson)
   const next = level.lessons[index + 1]
   const onward = next
     ? link(`Bài tiếp: ${next.id} ${next.title}`, href.lesson(level.id, next.id), "btn btn--primary back")
-    : link(`Xong phần Hiểu. Về cấp ${level.id}`, href.level(level.id), "btn btn--primary back")
+    : link(`Xong phần Hiểu. Sang phần Thử của cấp ${level.id}`, href.scenarios(level.id), "btn btn--primary back")
   const page = el(
     "main",
     "page narrow stack",
-    el("header", "page__header", back, el("h1", "", `${lesson.id} ${lesson.title}`)),
-    el("div", "card stack", ...blocks),
+    el(
+      "header",
+      "page__header",
+      back,
+      el("p", "muted", `Phần Hiểu, bài ${index + 1}/${level.lessons.length}`),
+      el("h1", "", `${lesson.id} ${lesson.title}`)
+    ),
+    el("div", "card stack lesson", ...content.nodes),
     el("div", "row", onward)
   )
-  return { el: page, destroy: () => figures.forEach((f) => f.destroy()) }
+  return { el: page, destroy: content.destroy }
 }
 
 export function createLevelScenarios(app: App, id: number): Screen {

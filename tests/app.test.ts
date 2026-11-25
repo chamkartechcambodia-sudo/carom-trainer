@@ -188,10 +188,6 @@ describe("logic qua cap", () => {
       expect(l.scenarios.every((s) => s.level === l.id)).toBe(true)
       expect(l.drills.length).toBeGreaterThanOrEqual(2)
       expect(l.drills.every((d) => d.layouts?.length)).toBe(true)
-      for (const lesson of l.lessons) {
-        expect(lesson.body.filter((b) => b.type === "figure")).toHaveLength(1)
-        expect(lesson.body.filter((b) => b.type === "example")).toHaveLength(1)
-      }
     }
     for (const l of LEVELS.slice(5)) expect(l.scenarios.every((s) => s.goal.type === "gather")).toBe(true)
     const ids = LEVELS.flatMap((l) => l.scenarios.map((s) => s.id))
@@ -216,10 +212,6 @@ describe("logic qua cap", () => {
     for (const g of "ABCDEFGHI") expect(l4.scenarios.filter((s) => s.group === g)).toHaveLength(3)
     expect(l4.drills.every((d) => d.layouts?.length)).toBe(true)
     expect(l4.drills[5].layouts).toHaveLength(2)
-    for (const lesson of l4.lessons) {
-      expect(lesson.body.some((b) => b.type === "figure" || b.type === "explorer")).toBe(true)
-      expect(lesson.body.filter((b) => b.type === "example")).toHaveLength(1)
-    }
   })
 
   it("cap 1 den 3 co noi dung that: moi bai Hieu co mot hinh va mot vi du, moi cap 9 tinh huong", () => {
@@ -229,11 +221,35 @@ describe("logic qua cap", () => {
       expect(l.scenarios.every((s) => s.level === l.id)).toBe(true)
       expect(l.drills.length).toBeGreaterThanOrEqual(2)
       expect(l.drills.every((d) => d.layouts?.length)).toBe(true)
-      for (const lesson of l.lessons) {
-        expect(lesson.body.filter((b) => b.type === "figure")).toHaveLength(1)
-        expect(lesson.body.filter((b) => b.type === "example")).toHaveLength(1)
+    }
+  })
+
+  it("moi bai Hieu di du trinh tu: muc tieu, hinh ve, ban mo phong, vi du, loi hay gap, ghi nho, tu kiem tra (D21)", () => {
+    const lessons = LEVELS.flatMap((l) => l.lessons)
+    expect(lessons).toHaveLength(23)
+    for (const lesson of lessons) {
+      const count = (type: string) => lesson.body.filter((b) => b.type === type).length
+      expect(lesson.body[0].type, lesson.id).toBe("goal")
+      expect(count("goal"), lesson.id).toBe(1)
+      expect(count("figure") + count("explorer"), lesson.id).toBeGreaterThanOrEqual(1)
+      expect(count("example"), lesson.id).toBe(1)
+      expect(count("mistakes"), lesson.id).toBe(1)
+      expect(count("key"), lesson.id).toBe(1)
+      expect(count("check"), lesson.id).toBeGreaterThanOrEqual(1)
+      for (const b of lesson.body) {
+        if (b.type === "check") {
+          expect(b.options.length, lesson.id).toBeGreaterThanOrEqual(2)
+          expect(b.answer, lesson.id).toBeGreaterThanOrEqual(0)
+          expect(b.answer, lesson.id).toBeLessThan(b.options.length)
+          expect(b.explain.length, lesson.id).toBeGreaterThan(20)
+        }
+        // Nut "So sánh tất cả" chi co nghia khi moi nut dung chung mot the bi.
+        if (b.type === "figure" && b.figure.compare) expect(b.figure.variants.every((v) => !v.balls), lesson.id).toBe(true)
       }
     }
+    // Bai nao khong co hinh ve thi phai co ly do: hien chi bai 5.1 va 5.3 (hinh la chinh ban mo phong va danh sach buoc).
+    const noDiagram = lessons.filter((l) => !l.body.some((b) => b.type === "diagram")).map((l) => l.id)
+    expect(noDiagram).toEqual(["5.1", "5.3"])
   })
 
   it("du lieu 7 cap: id bai tap khong trung, bai 6 cua cap 4 co nguong 6/10", () => {

@@ -489,3 +489,46 @@ Chưa đối chiếu với bàn thật. Mọi con số trên là của mô hình
   điều khiển vẫn ở dưới). Bài có nhiều nút đáp án thì bàn thấp hơn (ít nhất 240
   px); nếu vẫn không đủ chỗ thì khung dài hơn màn hình. Hình minh họa trong bài
   học vẫn theo bố cục cũ, chỉ thấp lại.
+
+## D21. Viết lại toàn bộ phần Hiểu: hình vẽ, từng bước, tự kiểm tra (2026-11-25)
+
+- Bối cảnh: người dùng báo phần Hiểu làm rất hời hợt, xem xong không hiểu gì
+  hoặc rất khó hình dung. Xem lại thì đúng: mỗi bài chỉ có hai đến bốn đoạn chữ
+  dày đặc, một ví dụ và một bàn có nút bấm. Khái niệm (độ dày chạm, bi ma, đường
+  90°, điểm chạm, thuận, nghịch) được dùng mà không có hình nào vẽ ra; bàn mô
+  phỏng không nói người học phải nhìn vào đâu; không có chỗ tự kiểm tra.
+- Tra cứu thêm (ghi ở `docs/SOURCES.md`, mục "Viết lại phần Hiểu"). Nguồn chính
+  là "Cahier technique du joueur débutant" của Liên đoàn bida Pháp (99 trang) và
+  vài trang dạy phăng tiếng Việt. Rút ra: mỗi ý đi kèm một hình; vẽ viên bi ở
+  các thời điểm liên tiếp để giải thích trượt và lăn; dạy cú tự nhiên trước, ê-phê
+  sau, kéo lùi sau cùng; ghi điểm luôn đứng trước vị trí; bi gần băng là bi to;
+  cú gom là đưa bi thứ nhất về gần bi thứ hai và tránh hai bi đụng nhau.
+- Chọn: mỗi bài đi theo một trình tự cố định (`src/content/blocks.ts`):
+  mục tiêu, từng ý nhỏ có tiêu đề và hình vẽ, bàn mô phỏng để tự bấm, ví dụ đời
+  thường, lỗi hay gặp, ghi nhớ, tự kiểm tra. Test trong `tests/app.test.ts` giữ
+  trình tự này cho cả 23 bài.
+- Hình vẽ (`src/table/diagram.ts`): 20 loại sơ đồ tự dựng bằng SVG, có chú thích
+  và mô tả cho trình đọc màn hình. Là sơ đồ, không phải mô phỏng; chỗ nào phóng
+  đại thì ghi rõ. Không sao chép hình của nguồn nào.
+- Bàn mô phỏng trong bài (`src/table/figure.ts`) thêm: câu "Đoán trước khi bấm",
+  dòng "Nhìn gì", nút "So sánh tất cả" vẽ chồng đường đi của mọi nút lên một bàn
+  (mỗi nút một kiểu nét, có mẫu nét trên nút), và đường 90° làm mốc ở các bài
+  nói về nó.
+- Nội dung thêm so với trước: bi ma và cách ngắm; cách dựng đường 90° ba bước;
+  vì sao bi cái theo, dừng, lùi; cú tự nhiên; cách xác định thuận hay nghịch ba
+  bước; ghi điểm trước, vị trí sau; đặt bi; ba câu hỏi trước cú gom; từ người
+  chơi hay dùng (cu-lê, rê-trô, ê-phê, cao cơ, thấp cơ, bi to, gom bi, bị đá).
+- Kiểm số liệu: các câu khẳng định có con số hoặc có chiều (xa gấp bốn, lệch
+  trước hay sau đường 90°, mạnh thì bật dựng hơn, gần thì nhích ít, xa thì theo
+  xa) đã được đo lại bằng mô phỏng. Hai câu không khớp đã sửa: câu tự kiểm tra
+  của bài 3.1 và lời tả cú gần ở bài 3.3.
+- Chỗ nguồn không thống nhất, bài giữ con số đã kiểm bằng mô phỏng: sách của
+  liên đoàn Pháp vẽ góc lệch của cú tự nhiên khoảng 45°, Dr. Dave đo khoảng 30
+  đến 34°; app dùng mốc 30°.
+- Giới hạn:
+  - Chưa có người chơi phăng có kinh nghiệm đọc lại nội dung.
+  - App vẫn không dạy tư thế, cầu tay và cách đưa cơ (sách của liên đoàn Pháp
+    dạy những thứ này trước tiên); đây là phần ngoài phạm vi ở `docs/SPEC.md`.
+  - Bài 5.1 và 5.3 không có hình vẽ riêng: hình của chúng là bàn mô phỏng và
+    danh sách bước.
+  - Câu tự kiểm tra không được lưu vào tiến độ.
