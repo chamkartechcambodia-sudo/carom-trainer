@@ -60,8 +60,11 @@ export function createScenarioScreen(scenario: Scenario, nav: ScenarioNav): Scre
       : `Lần thử: ${attempts}`
   }
 
+  const promptText = fillForce(scenario.prompt)
+
   function clearVerdict(rolling = false) {
-    status.textContent = rolling ? "Bi đang lăn…" : ""
+    // Dien thoai doc: loi giao viec khong con o tren ban, nen dong thong bao hien no khi chua co ket qua.
+    status.textContent = rolling ? "Bi đang lăn…" : shots.hudActive() ? promptText : ""
     status.className = "status"
   }
 
@@ -125,6 +128,8 @@ export function createScenarioScreen(scenario: Scenario, nav: ScenarioNav): Scre
   }
 
   const body: HTMLElement[] = []
+  /** Phan cua `body` can nam ngay duoi ban tren dien thoai (nut dap an, nut cham bang). */
+  const dockParts: HTMLElement[] = []
 
   // ---------- Chon dap an ----------
   const viewed = new Set<number>()
@@ -185,6 +190,7 @@ export function createScenarioScreen(scenario: Scenario, nav: ScenarioNav): Scre
     }
     goal.options.forEach((label, i) => optionButtons.push(button(label, "", () => choose(i))))
     body.push(el("div", goal.options.length === 9 ? "grid9" : "stack", ...optionButtons))
+    dockParts.push(...body)
     body.push(shots.actionsEl)
     setOptions()
   }
@@ -219,16 +225,17 @@ export function createScenarioScreen(scenario: Scenario, nav: ScenarioNav): Scre
   if (isMark) {
     const nudge = (delta: number) => mark && placeMark(slideOnCushion(mark, delta))
     body.push(
-      el("p", "muted", "Bấm lên băng để đặt dấu (vòng trắng). Dùng hai nút để nhích dấu từng chút."),
+      el("p", "muted hud-drop", "Bấm lên băng để đặt dấu (vòng trắng). Dùng hai nút để nhích dấu từng chút."),
       el(
         "div",
         "row",
         button("◀ Nhích", "", () => nudge(-MARK_STEP)),
         button("Nhích ▶", "", () => nudge(MARK_STEP)),
         confirmBtn
-      ),
-      shots.actionsEl
+      )
     )
+    dockParts.push(...body)
+    body.push(shots.actionsEl)
     renderMark()
   }
 
@@ -270,18 +277,19 @@ export function createScenarioScreen(scenario: Scenario, nav: ScenarioNav): Scre
 
   const page = el(
     "main",
-    "page",
-    // Loi giao viec nam tren ban de man hinh doc van thay no truoc khi cuon.
+    "page page--play",
+    // Loi giao viec nam tren ban; tren dien thoai doc no chuyen xuong dong thong bao duoi ban (xem clearVerdict).
     el(
       "header",
       "page__header",
       ...(nav.back ? [nav.back()] : []),
       el("p", "muted", nav.position),
       el("h1", "", scenario.title),
-      el("p", "", fillForce(scenario.prompt))
+      el("p", "hud-drop", promptText)
     ),
-    el("div", "play", el("div", "", shots.tableEl), panel)
+    el("div", "play", shots.hud({ status, dock: dockParts, side: [retryBtn, nextBtn] }), panel)
   )
+  clearVerdict()
   return { el: page, destroy: shots.destroy }
 }
 

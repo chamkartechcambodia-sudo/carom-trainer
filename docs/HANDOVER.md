@@ -64,6 +64,10 @@ Rà chữ:
 
 ## Chưa kiểm
 
+- Bố cục điện thoại mới (D20, làm sau bàn giao theo góp ý từ điện thoại thật):
+  mới thử ở khung giả lập 390x700 và 360x560 bằng chuột, chưa thử lại trên
+  điện thoại thật.
+
 - Chạm tay thật trên điện thoại: kéo cơ, xoay hướng ngắm, chọn điểm chạm bằng
   ngón tay. Mới chỉ thử bằng chuột và bằng mã ở khung giả lập.
 - Độ mượt của chuyển động: cú ra cơ, cây cơ mờ dần trên bàn, bi lăn. Khung thử

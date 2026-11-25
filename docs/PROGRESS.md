@@ -278,6 +278,15 @@ Cập nhật sau mỗi bước. Ghi ngày, kết quả nghiệm thu, và điều
     sát bên; kéo bi đỏ ra ngoài góc thì dừng ở góc; kéo chỗ trống không làm gì;
     xong thì ngắm và đánh được; "Đặt lại" về đúng thế vừa xếp; "Về thế mặc định" chạy.
   - CHƯA kiểm: kéo bằng ngón tay trên điện thoại thật.
+- [x] Sau bàn giao (2026-11-25): đưa mã lên GitHub và GitHub Pages; sửa bố cục điện thoại (D20).
+  - Người dùng thử trên điện thoại thật và báo: phải cuộn xuống mới đánh được,
+    bàn bị che. Đã xếp lại ba màn hình chơi cho vừa một màn hình ở điện thoại dọc.
+  - `npm run check` đạt (số liệu ở báo cáo cuối lượt).
+  - Đã tự thử trên `npm run dev` ở khung 390x700 và 360x560: tình huống cấp 1, 3,
+    4 (đủ 27 bài), 5, Đánh tự do, Đánh chuỗi. Đáy khung điều khiển luôn nằm trong
+    màn hình khi chưa cuộn; kéo cơ bằng chuột rồi buông thì bi chạy và bàn vẫn
+    thấy; đổi sang 1280x800 thì điều khiển về chỗ cũ, đổi lại thì vào khung.
+  - CHƯA kiểm: trên điện thoại thật; điện thoại xoay ngang.
 
 ## Việc còn mở
 

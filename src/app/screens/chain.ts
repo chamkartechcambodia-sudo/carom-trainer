@@ -89,9 +89,29 @@ export function createChain(app: App): Screen {
 
   render()
 
+  const saveRow = el(
+    "div",
+    "row",
+    saveBtn,
+    button("Xếp thế khai cuộc", "", () => restart(BREAK)),
+    button("Xếp thế dễ", "", () => restart(EASY))
+  )
+  const panel = el(
+    "div",
+    "card stack",
+    status,
+    cornerNote,
+    shots.actionsEl,
+    shots.lastShotEl,
+    shots.analysisEl,
+    shots.controlsEl,
+    saveRow,
+    el("div", "row", link("Xem thống kê", href.stats, "back"))
+  )
+
   const page = el(
     "main",
-    "page",
+    "page page--play",
     el(
       "header",
       "page__header",
@@ -99,7 +119,7 @@ export function createChain(app: App): Screen {
       el("h1", "", "Đánh chuỗi"),
       el(
         "p",
-        "muted",
+        "muted hud-drop",
         settings.cornerRule
           ? "Phăng tự do trên bàn mô phỏng. Luật vùng góc đang bật (bốn tam giác ở góc bàn)."
           : "Phăng tự do trên bàn mô phỏng. Luật vùng góc đang tắt; bật trong Cài đặt."
@@ -108,25 +128,8 @@ export function createChain(app: App): Screen {
     el(
       "div",
       "play",
-      el("div", "stack", shots.tableEl, el("div", "stats", ...cells.map((c) => c.node))),
-      el(
-        "div",
-        "card stack",
-        status,
-        cornerNote,
-        shots.actionsEl,
-        shots.lastShotEl,
-        shots.analysisEl,
-        shots.controlsEl,
-        el(
-          "div",
-          "row",
-          saveBtn,
-          button("Xếp thế khai cuộc", "", () => restart(BREAK)),
-          button("Xếp thế dễ", "", () => restart(EASY))
-        ),
-        el("div", "row", link("Xem thống kê", href.stats, "back"))
-      )
+      el("div", "stack", shots.hud({ status, dock: [cornerNote] }), el("div", "stats", ...cells.map((c) => c.node))),
+      panel
     )
   )
   return { el: page, destroy: shots.destroy }

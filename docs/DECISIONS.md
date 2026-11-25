@@ -455,3 +455,37 @@ Chưa đối chiếu với bàn thật. Mọi con số trên là của mô hình
 - Giới hạn: chỉ xếp được ở Đánh tự do; không lưu được thế đã xếp qua lần mở sau;
   không nhập được tọa độ bằng số. Trong trường hợp phải tính lại, bi bắt đầu lệch
   tối đa 1,5 mm so với chỗ đang hiển thị.
+
+## D20. Bố cục điện thoại: bàn và điều khiển chính trong một màn hình (2026-11-25)
+
+- Bối cảnh: người dùng mở bản GitHub Pages trên điện thoại và báo thiết kế rất tệ:
+  phải cuộn xuống mới tới khung kéo cơ và nút Đánh, lúc đó bàn bị che, đánh mà
+  không thấy gì; nhiều chức năng khác cũng vậy. Nguyên nhân: bàn dọc rộng hết
+  màn hình thì cao hơn cả màn hình, còn mọi điều khiển xếp thành một cột bên dưới.
+  Ở bước 9 tôi chỉ kiểm "không lỗi, không tràn ngang" ở khung điện thoại mà không
+  kiểm việc dùng được trong một màn hình; đó là thiếu sót của tôi.
+- Chọn: trên màn hình hẹp và dọc (rộng tối đa 700 px), ba màn hình chơi (tình
+  huống, Đánh tự do, Đánh chuỗi) xếp lại thành một khung vừa đúng một màn hình:
+  - Trên cùng: một dòng gồm nút quay lại, vị trí, tên. Thanh điều hướng chung ẩn
+    ở ba màn hình này.
+  - Giữa: bàn bên trái, cao bằng phần màn hình còn lại; cột bên phải có mặt bi
+    chọn điểm chạm, bốn nút nhích hướng ngắm, và nút phụ (Đặt lại, Xếp bi, Thử
+    lại, Tiếp theo).
+  - Dưới: ô thông báo cao cố định ba dòng (lời giao việc, rồi kết quả), nút đáp
+    án nếu có, khung kéo cơ có số lực nằm bên trong, hàng nút − + Đánh Xem lại.
+  - Phần còn lại (gợi ý, lời giải thích, cú vừa đánh, phân tích, trợ giúp ngắm,
+    thống kê chuỗi) nằm bên dưới, cuộn xuống mới thấy.
+- Cách làm: `shotTable.hud()` trả về khung chứa bàn; khi màn hình hẹp và dọc nó
+  dời các điều khiển sẵn có vào khung (để lại dấu giữ chỗ), khi rộng thì trả về
+  chỗ cũ. Không có bản điều khiển thứ hai, và bố cục máy tính giữ nguyên. Chiều
+  cao bàn tính bằng mã từ chiều cao màn hình thật, tính lại khi màn hình đổi cỡ.
+- Cái giá: bàn nhỏ đi. Trước đây bàn rộng hết màn hình, viên bi khoảng 16 px; nay
+  bàn phải thấp hơn màn hình nên viên bi khoảng 9 px ở màn hình 390x700. Mặt bi
+  chọn điểm chạm cũng nhỏ đi (khoảng 110 px thay vì 168 px). Tôi chọn như vậy vì
+  thấy được bàn lúc đánh quan trọng hơn bi to.
+- Kèm theo: bàn nằm ngang không bao giờ cao hơn màn hình; bàn trong hình minh
+  họa của bài học thấp lại để hàng nút nằm ngay dưới bàn.
+- Giới hạn: điện thoại xoay ngang chưa có bố cục riêng (bàn vừa màn hình nhưng
+  điều khiển vẫn ở dưới). Bài có nhiều nút đáp án thì bàn thấp hơn (ít nhất 240
+  px); nếu vẫn không đủ chỗ thì khung dài hơn màn hình. Hình minh họa trong bài
+  học vẫn theo bố cục cũ, chỉ thấp lại.

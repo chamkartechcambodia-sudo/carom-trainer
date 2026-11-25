@@ -1,6 +1,7 @@
 // Trang "Danh tu do": ban 3 bi, bi nam lai cho dung sau moi cu.
 import type { Setup } from "../engine"
-import { button, el, type Screen } from "../app/dom"
+import { button, el, link, type Screen } from "../app/dom"
+import { href } from "../app/router"
 import { judgeGoal } from "../scenarios/judge"
 import { createShotTable } from "./shotTable"
 import type { Aids } from "./tableView"
@@ -50,16 +51,18 @@ export function createFreePlay(aids: Partial<Aids> = {}): Screen {
   arrangeBtn.setAttribute("aria-pressed", "false")
   shots.actionsEl.append(resetBtn, arrangeBtn, defaultBtn)
 
+  const panel = el("div", "card stack", status, shots.actionsEl, shots.lastShotEl, shots.analysisEl, shots.controlsEl)
   const page = el(
     "main",
-    "page",
+    "page page--play",
     el(
       "header",
       "page__header",
+      link("← Trang chính", href.home, "back"),
       el("h1", "", "Đánh tự do"),
-      el("p", "muted", "Bàn phăng 3 bi. Bi trắng là bi cái. Bấm Xếp bi để tự đặt thế muốn tập.")
+      el("p", "muted hud-drop", "Bàn phăng 3 bi. Bi trắng là bi cái. Bấm Xếp bi để tự đặt thế muốn tập.")
     ),
-    el("div", "play", el("div", "", shots.tableEl), el("div", "card stack", status, shots.actionsEl, shots.lastShotEl, shots.analysisEl, shots.controlsEl))
+    el("div", "play", shots.hud({ status, side: [resetBtn, arrangeBtn, defaultBtn] }), panel)
   )
   return { el: page, destroy: shots.destroy }
 }

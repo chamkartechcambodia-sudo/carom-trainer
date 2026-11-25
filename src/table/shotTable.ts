@@ -42,8 +42,27 @@ export interface ShotTableOptions {
   onClear: (rolling: boolean) => void
 }
 
+/** Nhung phan cua man hinh can nam canh ban khi xem tren dien thoai doc. Phan tu phai da nam trong trang. */
+export interface HudParts {
+  /** Dong thong bao (ket qua, huong dan): nam ngay duoi ban. */
+  status?: HTMLElement
+  /** Dieu khien rieng cua man hinh, dat duoi dong thong bao (vi du cac nut dap an). */
+  dock?: HTMLElement[]
+  /** Nut phu dat o cot ben canh ban (vi du Dat lai, Thu lai, Tiep theo). */
+  side?: HTMLElement[]
+}
+
 export interface ShotTable {
   tableEl: SVGSVGElement
+  /**
+   * Khung chua ban, dung thay cho `tableEl` o cac man hinh choi. Tren dien thoai doc, khung
+   * gom ban va moi dieu khien chinh vao vua mot man hinh (D20): canh ban la diem cham va
+   * nut ngam, duoi ban la thong bao, keo co va nut Danh. Man hinh rong thi khung chi chua
+   * ban, cac dieu khien o nguyen cho cu. Chi goi mot lan, sau khi `parts` da nam trong trang.
+   */
+  hud(parts?: HudParts): HTMLElement
+  /** Dang o bo cuc dien thoai doc (xem `hud`). */
+  hudActive(): boolean
   /** Ban, de man hinh ve them vet chong va dau cham bang. */
   table: TableView
   /** Cac nhom dieu khien: ngam, luc, diem cham, tro giup. */
@@ -72,6 +91,9 @@ const copy = (s: Setup): Setup => JSON.parse(JSON.stringify(s))
 
 /** Thoi gian (giay) cho ban hien the ban dau truoc khi mot cu moi bat dau, khi ban dang hien ket qua cu truoc. */
 const LEAD_IN = 0.7
+/** Bo cuc dien thoai: ban khong thap hon muc nay (px), va khe giua cac khoi (px, khop voi CSS). */
+const HUD_MIN_TABLE = 240
+const HUD_GAP = 6
 
 export function createShotTable(options: ShotTableOptions): ShotTable {
   const locked = options.locked ?? {}
@@ -423,23 +445,22 @@ export function createShotTable(options: ShotTableOptions): ShotTable {
   narrowPortrait.addEventListener("change", applyOrientation)
   applyOrientation()
 
-  const aimGroup =
-    locked.angleDeg === undefined
-      ? el(
-          "div",
-          "stack",
-          el("div", "row", el("h2", "", "Ngắm"), angleLabel),
-          el(
-            "div",
-            "row",
-            button("−1°", "", () => nudge(-1)),
-            button("−0,1°", "", () => nudge(-0.1)),
-            button("+0,1°", "", () => nudge(0.1)),
-            button("+1°", "", () => nudge(1))
-          )
-        )
-      : el("p", "muted", "Hướng đánh được giữ cố định.")
+  const aimFree = locked.angleDeg === undefined
+  const nudgeBtns = aimFree
+    ? [
+        button("−1°", "", () => nudge(-1)),
+        button("−0,1°", "", () => nudge(-0.1)),
+        button("+0,1°", "", () => nudge(0.1)),
+        button("+1°", "", () => nudge(1)),
+      ]
+    : []
+  const aimGroup = aimFree
+    ? el("div", "stack", el("div", "row", el("h2", "", "Ngắm"), angleLabel), el("div", "row", ...nudgeBtns))
+    : el("p", "muted", "Hướng đánh được giữ cố định.")
 
+  const powerFree = locked.power === undefined
+  const minusBtn = button("−", "", () => nudgePower(-1))
+  const plusBtn = button("+", "", () => nudgePower(1))
   const powerGroup =
     locked.power === undefined
       ? el(
@@ -451,34 +472,35 @@ export function createShotTable(options: ShotTableOptions): ShotTable {
           el(
             "div",
             "row",
-            button("−", "", () => nudgePower(-1)),
-            button("+", "", () => nudgePower(1)),
+            minusBtn,
+            plusBtn,
             el("span", "muted", "Chỉnh từng chút (2,4% lực), rồi bấm Đánh")
           )
         )
       : el("p", "muted", "Lực đánh được giữ cố định.")
 
   const tipSide = el("div", "stack", tipLabel)
+  let centreBtn: HTMLButtonElement | null = null
   if (locked.tip) {
     picker.el.classList.add("tip-picker--locked")
     picker.el.setAttribute("tabindex", "-1")
   } else {
-    tipSide.append(
-      button("Về giữa tâm", "", () => {
-        tip = { x: 0, y: 0 }
-        picker.set(tip)
-        clearResult()
-        renderAim()
-      })
-    )
+    centreBtn = button("Về giữa tâm", "", () => {
+      tip = { x: 0, y: 0 }
+      picker.set(tip)
+      clearResult()
+      renderAim()
+    })
+    tipSide.append(centreBtn)
   }
 
+  const tipGroup = el("div", "stack", el("h2", "", "Điểm chạm"), el("div", "row", picker.el, tipSide))
   const controlsEl = el(
     "div",
     "stack",
     aimGroup,
     powerGroup,
-    el("div", "stack", el("h2", "", "Điểm chạm"), el("div", "row", picker.el, tipSide)),
+    tipGroup,
     el(
       "div",
       "",
@@ -495,11 +517,97 @@ export function createShotTable(options: ShotTableOptions): ShotTable {
   renderButtons()
   renderAim()
 
+  const actionsEl = el("div", "row", shootBtn, replayBtn)
+
+  // ---------- Bo cuc dien thoai doc: ban va dieu khien chinh trong mot man hinh ----------
+  let stage: HTMLElement | null = null
+  let hudOn = false
+  let stopHud = () => {}
+  /** Cac phan tu da doi cho, kem dau giu cho de tra ve dung vi tri cu. */
+  const homes: { node: Element; mark: Comment }[] = []
+  const moveTo = (target: Element, nodes: (Element | null | undefined)[], front = false) => {
+    const moved: Element[] = []
+    for (const node of nodes) {
+      if (!node?.parentNode) continue
+      const mark = document.createComment("")
+      node.replaceWith(mark)
+      homes.push({ node, mark })
+      moved.push(node)
+    }
+    if (front) target.prepend(...moved)
+    else target.append(...moved)
+  }
+  const moveBack = () => {
+    for (const { node, mark } of homes.splice(0).reverse()) mark.replaceWith(node)
+  }
+
+  function hud(parts: HudParts = {}): HTMLElement {
+    if (stage) return stage
+    const tipBox = el("div", "hud-tip")
+    const aimBox = el("div", "hud-aim")
+    const sideBox = el("div", "hud-more")
+    const side = el("div", "stage__side", tipBox, aimBox, sideBox)
+    const statusBox = el("div", "hud-status")
+    const extraBox = el("div", "hud-extra")
+    const cueBox = el("div", "hud-cue")
+    const actionBox = el("div", "hud-actions")
+    const dock = el("div", "stage__dock", statusBox, extraBox, cueBox, actionBox)
+    const node = el("div", "stage", el("div", "stage__main", table.el, side), dock)
+    stage = node
+
+    // Chieu cao ban = phan con lai cua man hinh sau khi tru phan phia tren khung va phan dieu khien duoi ban.
+    const fit = () => {
+      if (!hudOn || !node.isConnected) return
+      const screenH = window.visualViewport?.height ?? window.innerHeight
+      const top = node.getBoundingClientRect().top + window.scrollY
+      const tableH = Math.max(HUD_MIN_TABLE, Math.floor(screenH - top - dock.offsetHeight - HUD_GAP * 2))
+      node.style.setProperty("--table-h", `${tableH}px`)
+    }
+    const apply = () => {
+      moveBack()
+      hudOn = narrowPortrait.matches
+      node.classList.toggle("stage--hud", hudOn)
+      // Phan con lai cua ba nhom dieu khien (tieu de, loi chi dan) khong con gi de dieu khien.
+      if (aimFree) aimGroup.hidden = hudOn
+      if (powerFree) powerGroup.hidden = hudOn
+      tipGroup.hidden = hudOn
+      if (!hudOn) return
+      // Bai nguoi hoc khong tu danh (chon dap an, cham bang): khong dua dieu khien cu danh ra canh ban.
+      if (manual) moveTo(tipBox, [picker.el, tipLabel, centreBtn])
+      if (manual && aimFree) moveTo(aimBox, [angleLabel, ...nudgeBtns])
+      moveTo(sideBox, parts.side ?? [])
+      moveTo(statusBox, [parts.status])
+      moveTo(extraBox, parts.dock ?? [])
+      if (manual && powerFree) {
+        moveTo(cueBox, [powerLabel, cue.el])
+        moveTo(actionsEl, [minusBtn, plusBtn], true)
+      }
+      moveTo(actionBox, [actionsEl])
+      fit()
+    }
+    narrowPortrait.addEventListener("change", apply)
+    window.addEventListener("resize", fit)
+    window.visualViewport?.addEventListener("resize", fit)
+    const watcher = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(fit)
+    watcher?.observe(dock)
+    watcher?.observe(node)
+    stopHud = () => {
+      narrowPortrait.removeEventListener("change", apply)
+      window.removeEventListener("resize", fit)
+      window.visualViewport?.removeEventListener("resize", fit)
+      watcher?.disconnect()
+    }
+    apply()
+    return node
+  }
+
   return {
     tableEl: table.el,
     table,
+    hud,
+    hudActive: () => hudOn,
     controlsEl,
-    actionsEl: el("div", "row", shootBtn, replayBtn),
+    actionsEl,
     analysisEl,
     lastShotEl,
     reset,
@@ -513,6 +621,7 @@ export function createShotTable(options: ShotTableOptions): ShotTable {
       renderButtons()
     },
     destroy() {
+      stopHud()
       cue.destroy()
       stopClock?.(false)
       stopClock = null

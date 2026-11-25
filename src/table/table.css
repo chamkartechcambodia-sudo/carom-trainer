@@ -9,10 +9,18 @@
   -webkit-user-select: none;
 }
 
+/* Ban khong bao gio cao hon man hinh: phai nhin duoc ca ban ma khong cuon. */
+.table:not(.table--portrait) {
+  max-height: calc(100vh - 24px);
+  max-height: calc(100dvh - 24px);
+}
+
 .table--portrait {
   width: auto;
   max-width: 100%;
   height: 70vh;
+  /* Hinh minh hoa trong bai hoc: chua cho cho hang nut ngay duoi ban. */
+  height: min(70dvh, calc(100dvh - 200px));
   margin-inline: auto;
 }
 
@@ -352,4 +360,212 @@
   stroke: var(--c-ball-yellow);
   stroke-width: 0.12;
   stroke-dasharray: 0.5 0.35;
+}
+
+/*
+ * Bo cuc dien thoai doc cua man hinh choi (D20): ban va moi dieu khien chinh nam trong mot
+ * man hinh. Lop .stage--hud do shotTable bat khi man hinh hep va doc; chieu cao ban
+ * (--table-h) do shotTable tinh tu chieu cao man hinh.
+ */
+.stage__side,
+.stage__dock {
+  display: none;
+}
+
+.stage--hud {
+  --tap: 38px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stage--hud .stage__main {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  height: var(--table-h, 60vh);
+}
+
+.stage--hud .table--portrait {
+  flex: none;
+  height: 100%;
+  width: auto;
+  max-width: calc(100% - 118px);
+  margin: 0;
+}
+
+.stage--hud .stage__side {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  max-width: 150px;
+  overflow-y: auto;
+}
+
+.stage--hud .stage__dock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hud-tip,
+.hud-aim,
+.hud-more,
+.hud-extra,
+.hud-cue,
+.hud-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hud-tip:empty,
+.hud-aim:empty,
+.hud-more:empty,
+.hud-extra:empty,
+.hud-cue:empty,
+.hud-status:empty {
+  display: none;
+}
+
+.stage__side .btn {
+  width: 100%;
+  padding: 0 6px;
+  font-size: var(--fs-sm);
+  line-height: 1.15;
+}
+
+.hud-tip .tip-picker {
+  width: 100%;
+  /* Man hinh thap thi mat bi nho lai de cot ben canh khong phai cuon. */
+  max-width: clamp(72px, calc(var(--table-h, 440px) * 0.26), 116px);
+  height: auto;
+  aspect-ratio: 1;
+  align-self: center;
+}
+
+.hud-tip > p,
+.hud-aim > span {
+  font-size: var(--fs-sm);
+  line-height: 1.2;
+  text-align: center;
+}
+
+.hud-aim {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.hud-aim > span {
+  grid-column: 1 / -1;
+}
+
+.hud-more {
+  margin-top: auto;
+}
+
+/* Dong thong bao cao co dinh ba dong de ban khong nhay khi chu doi; chu dai thi cuon trong o. */
+.hud-status {
+  height: calc(3 * 1.3em + 2px);
+  overflow-y: auto;
+  font-size: var(--fs-sm);
+  line-height: 1.3;
+}
+
+.hud-status .status {
+  min-height: 0;
+}
+
+.hud-extra .stack {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.hud-extra .stack > .btn {
+  flex: 1 1 30%;
+  padding: 0 8px;
+  font-size: var(--fs-sm);
+}
+
+.hud-extra h2 {
+  flex-basis: 100%;
+  font-size: var(--fs-sm);
+}
+
+.hud-extra .grid9 {
+  gap: 4px;
+}
+
+.hud-extra .grid9 .btn {
+  padding: 0 4px;
+  font-size: var(--fs-sm);
+}
+
+.hud-extra .note {
+  padding: 2px var(--sp-2);
+  font-size: var(--fs-sm);
+}
+
+/* So luc nam ngay trong khung keo co de khong ton them mot dong. */
+.hud-cue {
+  position: relative;
+}
+
+.hud-cue > h2 {
+  position: absolute;
+  z-index: 1;
+  left: 8px;
+  top: 2px;
+  color: #fff;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  pointer-events: none;
+}
+
+.hud-cue .cue-pull {
+  height: 52px;
+}
+
+.hud-actions .row {
+  flex-wrap: nowrap;
+}
+
+.hud-actions .btn {
+  padding: 0 12px;
+}
+
+@media (max-width: 700px) and (orientation: portrait) {
+  .play-route .nav,
+  .page--play .hud-drop {
+    display: none;
+  }
+
+  .page--play {
+    padding-top: 0;
+  }
+
+  /* Tieu de gon mot dong: nut quay lai, vi tri, ten. */
+  .page--play .page__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--sp-2);
+    margin-bottom: 0;
+    min-height: 40px;
+  }
+
+  .page--play .page__header .back {
+    min-height: 40px;
+  }
+
+  .page--play .page__header h1 {
+    font-size: var(--fs-md);
+  }
+
+  .page--play .play {
+    gap: var(--sp-3);
+  }
 }

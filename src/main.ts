@@ -75,6 +75,8 @@ function render() {
   current?.destroy()
   current = create(route)
   host.replaceChildren(current.el)
+  // Man hinh choi tren dien thoai doc an thanh dieu huong de nhuong cho cho ban (D20); da co nut quay lai.
+  document.body.classList.toggle("play-route", ["scenarios", "freePlay", "chain"].includes(route.name))
   NAV.forEach((item, i) =>
     item.names.includes(route.name) ? links[i].setAttribute("aria-current", "page") : links[i].removeAttribute("aria-current")
   )
